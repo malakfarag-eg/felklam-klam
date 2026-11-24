@@ -34,7 +34,7 @@ def head(title,pre,cls="",desc="ف الكلامِ كلام، بودكاست تق
 <nav><a href="{pre}episodes.html">الحلقات</a><a href="{pre}space.html">{SPACE_NAME}</a><a href="{pre}about.html">عن المكان</a><a href="{pre}contact.html">تواصل</a><a class="sr" href="{pre}episodes.html#q" aria-label="بحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></a></nav></header>
 <main>'''
 def foot(pre):
-    return f'''</main><footer><div class="fw"><span class="fl"><a href="{pre}contact.html">تواصل</a><a href="{YT}" target="_blank" rel="noopener">يوتيوب</a></span></div></footer>
+    return f'''</main><footer><div class="fw"><span class="fl"><a href="{pre}contact.html">تواصل</a><a href="{YT}" target="_blank" rel="noopener">يوتيوب</a><a href="https://www.instagram.com/inspeechtalk" target="_blank" rel="noopener">إنستجرام</a><a href="https://www.facebook.com/share/1BJq657VJj/" target="_blank" rel="noopener">فيسبوك</a></span></div></footer>
 <script src="{pre}app.js" defer></script></body></html>'''
 def words(s):
     return "".join(f'<span class="w" style="--i:{i}">{e(w)}</span> ' for i,w in enumerate(s.split()))
@@ -158,6 +158,6 @@ ct=head("تواصل | ف الكلامِ كلام","",cls="contact")+f'''<section
 <textarea name="message" rows="5" required placeholder="اكتب هنا..." aria-label="رسالتك"></textarea>
 <div class="rowf"><input name="name" placeholder="اسمك (اختياري)" autocomplete="off"><button class="btn pri" type="submit">ابعت</button></div>
 <p class="msg" role="status" aria-live="polite"></p></form></div>
-<div><h2 class="tt">السوشيال</h2><ul class="soc"><li><a href="{YT}" target="_blank" rel="noopener">يوتيوب <span>@inspeechtalkk</span></a></li></ul></div></div></section>'''+foot("")
+<div><h2 class="tt">السوشيال</h2><ul class="soc"><li><a href="{YT}" target="_blank" rel="noopener">يوتيوب <span>@inspeechtalkk</span></a></li><li><a href="https://www.instagram.com/inspeechtalk" target="_blank" rel="noopener">إنستجرام <span>@inspeechtalk</span></a></li><li><a href="https://www.facebook.com/share/1BJq657VJj/" target="_blank" rel="noopener">فيسبوك</a></li></ul></div></div></section>'''+foot("")
 open("contact.html","w",encoding="utf-8").write(ct)
 print("ok")
