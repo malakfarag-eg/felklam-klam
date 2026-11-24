@@ -4,13 +4,19 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 D=json.load(open("data/episodes.json",encoding="utf-8"))
 KEY=D["site"]["form_key"]; YT=D["site"]["youtube"]; TOPICS=D["topics"]
 EPS=[]
+THEMES=[1,2,3,5,6,7,8]
 for x in D["episodes"]:
-    y=dict(x); y["slug"]=str(y["n"]); y["len"]=y["duration"]; EPS.append(y)
-TRANSCRIPTS={x["n"]:x["transcript"] for x in D["episodes"] if x["transcript"]}
-SNIPS=[(i["kind"],i["text"],i["episode"]) for i in D["space_items"]]
+    if x.get("status")=="draft": continue
+    y=dict(x); y["slug"]=str(y["n"]); y["len"]=y["duration"]
+    if not y.get("theme"): y["theme"]="t%d"%THEMES[(y["n"]-1)%len(THEMES)]
+    EPS.append(y)
+EPS.sort(key=lambda z:z["n"])
+PUB={z["n"] for z in EPS}
+TRANSCRIPTS={x["n"]:x["transcript"] for x in EPS if x.get("transcript")}
+SNIPS=[(i["kind"],i["text"],i["episode"]) for i in D["space_items"] if i["episode"] in PUB]
 e=html.escape
 SPACE_NAME=D["site"]["space_name"]
-DATES={x["n"]:x["date"] for x in D["episodes"]}
+DATES={x["n"]:x["date"] for x in EPS}
 MON=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"]
 AR=str.maketrans("0123456789","٠١٢٣٤٥٦٧٨٩")
 def ar(x): return str(x).translate(AR)
@@ -43,6 +49,8 @@ def ephead(ep):
     n=ep["n"]
     if os.path.exists(f"thumbs/{n}.jpg"):
         return f'<img class="eth" src="../thumbs/{n}.jpg" alt="{e(ep["title"])}" width="1280" height="720">'
+    if ep.get("vid") and ep.get("thumb")=="yt":
+        return f'<img class="eth" src="https://i.ytimg.com/vi/{ep["vid"]}/maxresdefault.jpg" onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/{ep["vid"]}/hqdefault.jpg\'" alt="{e(ep["title"])}" width="1280" height="720">'
     return f'<div class="eth etile"><img src="../logo.png" alt="" class="al"><span class="ak">الحلقة</span><span class="an">{ar(n)}</span><span class="at">{e(ep["title"])}</span></div>'
 def row(ep,pre):
     return f'''<article class="row" data-s="{sdata(ep)}">{pb(ep,pre)}<span class="num">{ar(ep["n"])}</span>
@@ -116,7 +124,7 @@ for ep in EPS:
     rel=[x for x in LATEST if x["topic"]==ep["topic"] and x["n"]!=n]
     rel+= [x for x in LATEST if x["n"]!=n and x not in rel]
     rel=rel[:3]
-    prev=BY.get(n-1); nxt=BY.get(n+1)
+    ordn=sorted(PUB); ix=ordn.index(n); prev=BY.get(ordn[ix-1]) if ix>0 else None; nxt=BY.get(ordn[ix+1]) if ix<len(ordn)-1 else None
     nav=""
     if prev: nav+=f'<a href="{prev["slug"]}.html"><small>الحلقة اللي قبلها</small>{e(prev["title"])}</a>'
     if nxt: nav+=f'<a class="nx" href="{nxt["slug"]}.html"><small>الحلقة اللي بعدها</small>{e(nxt["title"])}</a>'
@@ -170,3 +178,7 @@ ct=head("تواصل | ف الكلامِ كلام","",cls="contact")+f'''<section
 <div><h2 class="tt">السوشيال</h2><ul class="soc"><li><a href="{YT}" target="_blank" rel="noopener">يوتيوب <span>@inspeechtalkk</span></a></li><li><a href="https://www.instagram.com/inspeechtalk" target="_blank" rel="noopener">إنستجرام <span>@inspeechtalk</span></a></li><li><a href="https://www.facebook.com/share/1BJq657VJj/" target="_blank" rel="noopener">فيسبوك</a></li></ul></div></div></section>'''+foot("")
 open("contact.html","w",encoding="utf-8").write(ct)
 print("ok")
+
+# remove pages of episodes that are hidden or gone
+for f in os.listdir("ep"):
+    if f.endswith(".html") and f[:-5] not in {z["slug"] for z in EPS}: os.remove("ep/"+f)
