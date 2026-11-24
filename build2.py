@@ -30,8 +30,8 @@ def head(title,pre,cls="",desc="ف الكلامِ كلام، بودكاست تق
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{pre}style.css"><script>document.documentElement.className="js"</script></head><body class="{cls}">
-<header class="top"><a class="lg" href="{pre}index.html" aria-label="ف الكلامِ كلام"><img src="{pre}logo-t.png" alt="ف الكلامِ كلام"></a>
-<nav><a href="{pre}episodes.html">الحلقات</a><a href="{pre}space.html">{SPACE_NAME}</a><a href="{pre}about.html">عن المكان</a><a href="{pre}contact.html">تواصل</a><a class="sr" href="{pre}episodes.html#q" aria-label="بحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></a></nav></header>
+<header class="top" dir="ltr"><a class="lg" href="{pre}index.html" aria-label="ف الكلامِ كلام"><img src="{pre}logo-t.png" alt="ف الكلامِ كلام"></a>
+<nav><a href="{pre}episodes.html">Episodes</a><a href="{pre}space.html">Ask Yourself</a><a href="{pre}about.html">About</a><a href="{pre}contact.html">Contact</a><a class="sr" href="{pre}episodes.html#q" aria-label="بحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></a></nav></header>
 <main>'''
 def foot(pre):
     return f'''</main><footer><div class="fw"><span class="fl"><a href="{pre}contact.html">تواصل</a><a href="{YT}" target="_blank" rel="noopener">يوتيوب</a><a href="https://www.instagram.com/inspeechtalk" target="_blank" rel="noopener">إنستجرام</a><a href="https://www.facebook.com/share/1BJq657VJj/" target="_blank" rel="noopener">فيسبوك</a></span></div></footer>
@@ -144,9 +144,18 @@ sp=head(f"{SPACE_NAME} | ف الكلامِ كلام","",cls="space")+f'''<sectio
 open("space.html","w",encoding="utf-8").write(sp)
 
 # ---------- ABOUT
-ab=head("عن المكان | ف الكلامِ كلام","",cls="about")+'''<section class="wrap pg"><h1 class="big">عن المكان</h1>
-<div class="abg"><div class="ab"><p>مش بنحاول نقولك تعيش إزاي.</p><p>ولا عندنا إجابات لكل الأسئلة.</p><p class="o">إحنا بس بنقف شوية...</p><p>عند الأسئلة اللي بنعدّي عليها كل يوم من غير ما ناخد بالنا.</p></div>
-<figure class="who"><div class="ph"><img src="malak.jpg" alt="ملك فرج"></div><figcaption>اللي ورا كل ده: <b>ملك فرج</b></figcaption></figure></div></section>'''+foot("")
+ab=head("About | ف الكلامِ كلام","",cls="about")+'''<section class="wrap pg"><div class="ab2">
+<p class="lead"><b>مش كل كلام بيتقال... بيكون مجرد كلام.</b></p>
+<p><b>ف الكلامِ كلام – In Speech Talk</b> هو مساحة بنفتح فيها مواضيع بنعيشها كل يوم، لكن مش دايمًا بناخد وقت نفكر فيها بعمق.</p>
+<p>عن نفسنا، عن علاقاتنا، عن اختياراتنا، عن المشاعر اللي مش بنعرف نفسرها، وعن أفكار أوقات كتير بنحتاج نسمعها من زاوية مختلفة.</p>
+<p>هنا مش بنقدم إجابات مثالية، ولا بنقولك تعيش إزاي.</p>
+<p>إحنا بنطرح أسئلة، بنناقش أفكار، وبنحاول نفهم نفسنا والحياة بشكل أوضح.</p>
+<p>من الاستحقاق والوعي والنضج، لحد الخوف والمقارنة والتغيير... كل حلقة هي فرصة إنك تقف شوية وسط زحمة الحياة، وتفكر.</p>
+<p class="en" dir="ltr"><b>Because sometimes, one conversation can change the way you see things.</b></p>
+<figure class="who2"><div class="ph"><img src="malak.jpg" alt="ملك فرج"></div></figure>
+<p>أنا ملك فرج، ودي مساحتي للكلام عن كل الحاجات اللي فعلًا تستاهل نتكلم فيها.</p>
+<p class="wel"><b>أهلًا بيك في ف الكلامِ كلام.</b></p>
+</div></section>'''+foot("")
 open("about.html","w",encoding="utf-8").write(ab)
 
 # ---------- CONTACT
