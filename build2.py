@@ -34,8 +34,7 @@ def head(title,pre,cls="",desc="ف الكلامِ كلام، بودكاست تق
 <nav><a href="{pre}episodes.html">الحلقات</a><a href="{pre}space.html">{SPACE_NAME}</a><a href="{pre}about.html">عن المكان</a><a href="{pre}contact.html">تواصل</a><a class="sr" href="{pre}episodes.html#q" aria-label="بحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></a></nav></header>
 <main>'''
 def foot(pre):
-    return f'''</main><footer><div class="fw"><span>كانت معاكم ملك فرج، وأشوفكم في حلقة جديدة.</span>
-<span class="fl"><a href="{pre}contact.html">تواصل</a><a href="{YT}" target="_blank" rel="noopener">يوتيوب</a></span></div></footer>
+    return f'''</main><footer><div class="fw"><span class="fl"><a href="{pre}contact.html">تواصل</a><a href="{YT}" target="_blank" rel="noopener">يوتيوب</a></span></div></footer>
 <script src="{pre}app.js" defer></script></body></html>'''
 def words(s):
     return "".join(f'<span class="w" style="--i:{i}">{e(w)}</span> ' for i,w in enumerate(s.split()))
@@ -147,8 +146,7 @@ open("space.html","w",encoding="utf-8").write(sp)
 # ---------- ABOUT
 ab=head("عن المكان | ف الكلامِ كلام","",cls="about")+'''<section class="wrap pg"><h1 class="big">عن المكان</h1>
 <div class="abg"><div class="ab"><p>مش بنحاول نقولك تعيش إزاي.</p><p>ولا عندنا إجابات لكل الأسئلة.</p><p class="o">إحنا بس بنقف شوية...</p><p>عند الأسئلة اللي بنعدّي عليها كل يوم من غير ما ناخد بالنا.</p></div>
-<figure class="who"><div class="ph"><img src="malak.jpg" alt="ملك فرج"></div><figcaption>اللي ورا كل ده: <b>ملك فرج</b></figcaption></figure></div>
-<p class="sig">كانت معاكم ملك فرج، وأشوفكم في حلقة جديدة من ف الكلامِ كلام.</p></section>'''+foot("")
+<figure class="who"><div class="ph"><img src="malak.jpg" alt="ملك فرج"></div><figcaption>اللي ورا كل ده: <b>ملك فرج</b></figcaption></figure></div></section>'''+foot("")
 open("about.html","w",encoding="utf-8").write(ab)
 
 # ---------- CONTACT
