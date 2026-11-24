@@ -9,7 +9,6 @@ var D={
 "عن نفسك":"About you","عن الناس وعنك":"About people and you","عن الوجع والتغيير":"About pain and change",
 "كلام برا الحلقات":"Talk outside the episodes","سؤال":"Question","اقتباس":"Quote","كمّل ←":"Keep going →",
 "سؤال الفترة دي":"This period's question",
-"إيه فكرة مش قادر تبطل تفكر فيها الفترة دي؟":"What's the one thought you can't stop thinking about lately?",
 "إجابتي":"My answer","اعتراف":"A confession","سؤال نفسي أسمع عنه حلقة":"A question I want an episode about",
 "ابعت":"Send","موافق إن إجابتي تتنشر أو تتستخدم في حلقة لو اتختارت":"I agree my answer can be published or used in an episode if chosen",
 "اكتب هنا...":"Write here...","اسمك (لو حابب، ولو مكتبتش هتفضل مجهول)":"Your name (optional, stays anonymous if you skip it)",

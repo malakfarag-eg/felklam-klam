@@ -325,3 +325,6 @@ html[data-lang=en] .top{direction:ltr}
 html[data-lang=en] .top nav a::after{right:auto;left:0}
 html[data-lang=en] .em,html[data-lang=en] .fm,html[data-lang=en] .rt em,html[data-lang=en] .back,html[data-lang=en] .lab{direction:ltr;text-align:right}
 html[data-lang=en] .em span{unicode-bidi:isolate}
+html[data-lang=en] .ask h2{direction:rtl;text-align:right}
+html[data-lang=en] .tp b,html[data-lang=en] .tp span{direction:ltr;text-align:right;display:block}
+html[data-lang=en] .tq a{direction:ltr;text-align:right;display:block}
