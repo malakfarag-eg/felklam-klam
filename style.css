@@ -317,3 +317,11 @@ body.hasmini footer{padding-bottom:100px}
 
 .ab2{max-width:640px}.ab2 p{font-size:19px;line-height:2;margin-bottom:1em;opacity:1;animation:none}.ab2 .lead{font-family:var(--d);font-size:28px;line-height:1.7;margin-bottom:.8em}.ab2 .en{text-align:left;font-size:17px;color:var(--or);margin:1.4em 0}.who2{margin:0 0 1.4em}.who2 .ph{aspect-ratio:4/5;border-radius:28px;overflow:hidden;background:#f2f2f2}.who2 img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block}.ab2 .wel{font-size:24px;font-family:var(--d)}.ab2 b{font-weight:700}
 .top nav a::after{right:auto;left:0}
+
+.lsw{font:600 13px/1 var(--b,inherit);display:inline-flex;gap:5px;align-items:center;background:none;border:0;cursor:pointer;padding:6px;color:inherit;direction:ltr}
+.lsw i{font-style:normal;opacity:.35}.lsw b{opacity:.5;font-weight:600}
+html[data-lang=ar] .lsw [data-l=ar],html[data-lang=en] .lsw [data-l=en]{color:#F45102;opacity:1}
+html[data-lang=en] .top{direction:ltr}
+html[data-lang=en] .top nav a::after{right:auto;left:0}
+html[data-lang=en] .em,html[data-lang=en] .fm,html[data-lang=en] .rt em,html[data-lang=en] .back,html[data-lang=en] .lab{direction:ltr;text-align:right}
+html[data-lang=en] .em span{unicode-bidi:isolate}

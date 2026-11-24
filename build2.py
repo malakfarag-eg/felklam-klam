@@ -29,13 +29,13 @@ def head(title,pre,cls="",desc="ف الكلامِ كلام، بودكاست تق
 <meta property="og:title" content="{e(title)}"><meta property="og:image" content="{pre}logo.jpg"><link rel="icon" href="{pre}logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{pre}style.css"><script>document.documentElement.className="js"</script></head><body class="{cls}">
-<header class="top" dir="ltr"><a class="lg" href="{pre}index.html" aria-label="ف الكلامِ كلام"><img src="{pre}logo-t.png" alt="ف الكلامِ كلام"></a>
-<nav><a href="{pre}episodes.html">Episodes</a><a href="{pre}space.html">Ask Yourself</a><a href="{pre}about.html">About</a><a href="{pre}contact.html">Contact</a><a class="sr" href="{pre}episodes.html#q" aria-label="بحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></a></nav></header>
+<link rel="stylesheet" href="{pre}style.css"><script>document.documentElement.className="js";try{{var q=location.search.match(/lang=(ar|en)/);if(q)localStorage.setItem("lang",q[1]);var L=localStorage.getItem("lang")||((navigator.language||"ar").slice(0,2)=="ar"?"ar":"en");document.documentElement.setAttribute("data-lang",L)}}catch(e){{}}</script></head><body class="{cls}">
+<header class="top"><a class="lg" href="{pre}index.html" aria-label="ف الكلامِ كلام"><img src="{pre}logo-t.png" alt="ف الكلامِ كلام"></a>
+<nav><a href="{pre}episodes.html">الحلقات</a><a href="{pre}space.html">{SPACE_NAME}</a><a href="{pre}about.html">عنّا</a><a href="{pre}contact.html">تواصل</a><a class="sr" href="{pre}episodes.html#q" aria-label="بحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></a><button class="lsw" type="button" aria-label="Language"><b data-l="ar">AR</b><i>|</i><b data-l="en">EN</b></button></nav></header>
 <main>'''
 def foot(pre):
     return f'''</main><footer><div class="fw"><span class="fl"><a href="{pre}contact.html">تواصل</a><a href="{YT}" target="_blank" rel="noopener">يوتيوب</a><a href="https://www.instagram.com/inspeechtalk" target="_blank" rel="noopener">إنستجرام</a><a href="https://www.facebook.com/share/1BJq657VJj/" target="_blank" rel="noopener">فيسبوك</a></span></div></footer>
-<script src="{pre}app.js" defer></script></body></html>'''
+<script src="{pre}app.js" defer></script><script src="{pre}i18n.js" defer></script></body></html>'''
 def words(s):
     return "".join(f'<span class="w" style="--i:{i}">{e(w)}</span> ' for i,w in enumerate(s.split()))
 def sdata(ep): return e(" ".join([ep["title"],ep["hook"],TOPICS[ep["topic"]],ep["word"]]+ep["desc"]))
@@ -144,7 +144,7 @@ sp=head(f"{SPACE_NAME} | ف الكلامِ كلام","",cls="space")+f'''<sectio
 open("space.html","w",encoding="utf-8").write(sp)
 
 # ---------- ABOUT
-ab=head("About | ف الكلامِ كلام","",cls="about")+'''<section class="wrap pg"><div class="ab2">
+ab=head("عنّا | ف الكلامِ كلام","",cls="about")+'''<section class="wrap pg"><div class="ab2">
 <p class="lead"><b>مش كل كلام بيتقال... بيكون مجرد كلام.</b></p>
 <p><b>ف الكلامِ كلام – In Speech Talk</b> هو مساحة بنفتح فيها مواضيع بنعيشها كل يوم، لكن مش دايمًا بناخد وقت نفكر فيها بعمق.</p>
 <p>عن نفسنا، عن علاقاتنا، عن اختياراتنا، عن المشاعر اللي مش بنعرف نفسرها، وعن أفكار أوقات كتير بنحتاج نسمعها من زاوية مختلفة.</p>

@@ -1,3 +1,4 @@
+function T(s){return window.__T?window.__T(s):s}
 (function(){
 "use strict";
 var A=new Audio(); A.preload="none";
@@ -62,7 +63,7 @@ document.addEventListener("click",function(e){
   var sp=t.closest(".ply .spd"); if(sp){var r=[1,1.25,1.5,2,.75],i=r.indexOf(A.playbackRate);A.playbackRate=r[(i+1)%r.length];sync();return}
   var sh=t.closest(".ply .sh"); if(sh){var u=location.href,tt=sh.closest(".ply").dataset.title;
     if(navigator.share){navigator.share({title:tt+" | ف الكلامِ كلام",url:u}).catch(function(){})}
-    else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){var o=sh.textContent;sh.textContent="اتنسخ";setTimeout(function(){sh.textContent=o},1500)})}
+    else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){var o=sh.textContent;sh.textContent=T("اتنسخ");setTimeout(function(){sh.textContent=o},1500)})}
     return}
   var tab=t.closest(".tabs button"); if(tab){showTab(tab.dataset.v);history.replaceState(null,"","#"+tab.dataset.v);return}
   var a=t.closest("a"); if(a&&a.href&&!a.target&&!a.hasAttribute("download")&&a.origin===location.origin&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&e.button===0){
@@ -119,16 +120,16 @@ function init(){
 document.addEventListener("submit",function(e){
   var f=e.target; if(!f.classList.contains("wf"))return; e.preventDefault();
   var msg=f.querySelector(".msg"),btn=f.querySelector("button[type=submit]"),m=f.message.value.trim();
-  if(!m){msg.textContent="اكتب حاجة الأول.";f.message.focus();return}
-  btn.disabled=true;msg.textContent="ثانية...";
+  if(!m){msg.textContent=T("اكتب حاجة الأول.");f.message.focus();return}
+  btn.disabled=true;msg.textContent=T("ثانية...");
   var d={access_key:f.access_key.value,subject:f.subject.value,message:m,"النوع":(f.querySelector("input[name=type]:checked")||{}).value||"",name:f.name.value.trim()||"من غير اسم",botcheck:f.botcheck.checked};
   if(f.consent)d["موافقة على النشر"]=f.consent.checked?"أيوه، ممكن تتنشر أو تتستخدم":"لأ";
   fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(d)})
   .then(function(r){return r.json()}).then(function(j){
-    if(j.success){msg.textContent="وصلت. شكرًا إنك قولتها.";f.message.value="";f.name.value=""}
-    else msg.textContent="حصلت مشكلة وهي ماوصلتش. جرب تاني بعد شوية.";
+    if(j.success){msg.textContent=T("وصلت. شكرًا إنك قولتها.");f.message.value="";f.name.value=""}
+    else msg.textContent=T("حصلت مشكلة وهي ماوصلتش. جرب تاني بعد شوية.");
     btn.disabled=false;
-  }).catch(function(){msg.textContent="حصلت مشكلة وهي ماوصلتش. جرب تاني بعد شوية.";btn.disabled=false});
+  }).catch(function(){msg.textContent=T("حصلت مشكلة وهي ماوصلتش. جرب تاني بعد شوية.");btn.disabled=false});
 });
 init();
 })();
