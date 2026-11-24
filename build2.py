@@ -40,6 +40,11 @@ def foot(pre):
 def words(s):
     return "".join(f'<span class="w" style="--i:{i}">{e(w)}</span> ' for i,w in enumerate(s.split()))
 def sdata(ep): return e(" ".join([ep["title"],ep["hook"],TOPICS[ep["topic"]],ep["word"]]+ep["desc"]))
+def ephead(ep):
+    n=ep["n"]
+    if os.path.exists(f"thumbs/{n}.jpg"):
+        return f'<img class="eth" src="../thumbs/{n}.jpg" alt="{e(ep["title"])}" width="1280" height="720">'
+    return f'<div class="eth etile"><img src="../logo.png" alt="" class="al"><span class="ak">الحلقة</span><span class="an">{ar(n)}</span><span class="at">{e(ep["title"])}</span></div>'
 def row(ep,pre):
     return f'''<article class="row" data-s="{sdata(ep)}">{pb(ep,pre)}<span class="num">{ar(ep["n"])}</span>
 <a class="rt" href="{pre}ep/{ep["slug"]}.html"><b>{e(ep["title"])}</b><i>{e(ep["hook"])}</i><em>{dfmt(ep["n"])} · {ar(ep["len"])}</em></a><span class="rw" aria-hidden="true">{e(ep["word"])}</span></article>'''
@@ -74,7 +79,7 @@ idx=head("ف الكلامِ كلام","",cls="home")+f'''
 <div class="cta">{pb(nw,"","btn pri bp","اسمع آخر حلقة","اسمع آخر حلقة")}<a class="btn" href="episodes.html">ادخل واتفرج براحتك</a></div><div class="scroll" aria-hidden="true"></div></section>
 
 <section class="feat rv"><div class="wrap fg">
-<div class="art {nw["theme"]}"><span class="aw">{e(nw["word"])}</span><span class="an">{ar(nw["n"])}</span></div>
+<div class="art"><img src="logo.png" alt="" class="al"><span class="ak">الحلقة</span><span class="an">{ar(nw["n"])}</span><span class="at">{e(nw["title"])}</span></div>
 <div class="fx"><small class="lab">آخر حلقة · {e(TOPICS[nw["topic"]])}</small><h2>{e(nw["title"])}</h2><p>{e(nw["hook"])}</p>
 <div class="fm">{dfmt(nw["n"])} · {ar(nw["len"])}</div>
 <div class="cta2">{pb(nw,"","btn pri bp","شغّل","شغّل الحلقة")}<a class="btn" href="ep/{nw["slug"]}.html">صفحة الحلقة</a></div></div></div></section>
@@ -120,7 +125,7 @@ for ep in EPS:
 <section class="eh"><div class="bgw" aria-hidden="true">{e(ep["word"])}</div>
 <div class="wrap"><a class="back" href="../episodes.html">← الحلقات</a>
 <small class="lab">{e(TOPICS[ep["topic"]])} · الحلقة {ar(n)}</small>
-<h1>{e(ep["title"])}</h1><div class="em">{dfmt(n)} · {ar(ep["len"])} · <span>#{e(ep["word"])}</span> <span>#{e(TOPICS[ep["topic"]].replace(" ","_"))}</span></div></div></section>
+{ephead(ep)}<h1>{e(ep["title"])}</h1><div class="em">{dfmt(n)} · {ar(ep["len"])} · <span>#{e(ep["word"])}</span> <span>#{e(TOPICS[ep["topic"]].replace(" ","_"))}</span></div></div></section>
 <section class="wrap body"><div class="d">{desc}</div>
 <div class="pl">{player(ep,pre)}<div class="lis"><span>تسمعها كمان على:</span><a href="{YT}" target="_blank" rel="noopener">يوتيوب</a></div></div></section>
 <section class="qt"><div class="wrap"><blockquote>{e(ep["quote"])}</blockquote></div></section>
