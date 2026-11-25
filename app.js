@@ -133,3 +133,5 @@ document.addEventListener("submit",function(e){
 });
 init();
 })();
+
+;(function(){var e=document.getElementById("pq");if(!e)return;try{var q=JSON.parse(e.getAttribute("data-q")),l=e.getAttribute("data-launch");if(!q.length)return;var i=0;if(/^\d{4}-\d{2}-\d{2}$/.test(l)){var p=l.split("-"),s=new Date(+p[0],+p[1]-1,+p[2]),n=new Date(),w=Math.floor((new Date(n.getFullYear(),n.getMonth(),n.getDate())-s)/6048e5);if(w>0)i=w%q.length}e.textContent=q[i]}catch(x){}})();

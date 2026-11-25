@@ -10,7 +10,7 @@ function txt2b64(t){return b64e(new TextEncoder().encode(t))}
 function b64txt(b){var s=atob(b.replace(/\s/g,"")),u=new Uint8Array(s.length),i;for(i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return new TextDecoder().decode(u)}
 function gh(path,opt){opt=opt||{};opt.headers=Object.assign({"Accept":"application/vnd.github+json","Authorization":"Bearer "+TOK},opt.headers||{});return fetch(API+path,opt).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(j.message||("خطأ "+r.status));e.status=r.status;throw e}return j})})}
 function cpath(p){return "/repos/"+OWNER+"/"+REPO+"/contents/"+p}
-function load(){return gh(cpath("data/episodes.json")+"?ref="+BR+"&t="+Date.now()).then(function(j){DATA=JSON.parse(b64txt(j.content));SHA=j.sha})}
+function load(){return gh(cpath("data/episodes.json")+"?ref="+BR+"&t="+Date.now()).then(function(j){DATA=JSON.parse(b64txt(j.content));if(!DATA.questions)DATA.questions={launch:"",items:[]};SHA=j.sha})}
 function save(note){return gh(cpath("data/episodes.json"),{method:"PUT",body:JSON.stringify({message:note,content:txt2b64(JSON.stringify(DATA,null,2)),sha:SHA,branch:BR})}).then(function(j){SHA=j.content.sha})}
 function putFile(path,b64,note){return gh(cpath(path)+"?ref="+BR).then(function(j){return j.sha},function(e){if(e.status==404)return null;throw e}).then(function(sha){var b={message:note,content:b64,branch:BR};if(sha)b.sha=sha;return gh(cpath(path),{method:"PUT",body:JSON.stringify(b)})})}
 function fileB64(f){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(r.result.split(",")[1])};r.onerror=rej;r.readAsDataURL(f)})}
@@ -28,8 +28,8 @@ function nextN(){var m=DATA.episodes.reduce(function(m,x){return Math.max(m,x.n)
 function render(){
   if(!TOK)return renderLogin();
   if(!DATA)return app.innerHTML='<p class="muted">جاري التحميل...</p>'+M();
-  var t='<div class="tabs"><button data-v="eps" class="'+(view=="eps"||view=="form"?"on":"")+'">الحلقات</button><button data-v="items" class="'+(view=="items"?"on":"")+'">اسأل نفسك</button><button data-v="out">خروج</button></div>'+M();
-  if(view=="eps")t+=epsView();else if(view=="form")t+=formView();else if(view=="items")t+=itemsView();
+  var t='<div class="tabs"><button data-v="eps" class="'+(view=="eps"||view=="form"?"on":"")+'">الحلقات</button><button data-v="items" class="'+(view=="items"?"on":"")+'">اسأل نفسك</button><button data-v="qs" class="'+(view=="qs"||view=="qf"?"on":"")+'">الأسئلة</button><button data-v="out">خروج</button></div>'+M();
+  if(view=="eps")t+=epsView();else if(view=="form")t+=formView();else if(view=="items")t+=itemsView();else if(view=="qs")t+=qsView();else if(view=="qf")t+=qfView();
   app.innerHTML=t;bind()
 }
 function renderLogin(){
@@ -42,6 +42,17 @@ function epsView(){
   l.forEach(function(e){var d=e.status=="draft";o+='<div class="card"><div class="n">'+e.n+'</div><div class="t"><b>'+h(e.title)+'</b><small>'+h(e.date)+' · '+h(e.duration)+'</small> <span class="pill '+(d?"d":"")+'">'+(d?"مخفية":"منشورة")+'</span></div><div class="acts"><button class="btn sm" data-edit="'+e.n+'">تعديل</button><button class="btn sm" data-tog="'+e.n+'">'+(d?"إظهار":"إخفاء")+'</button></div></div>'});
   return o
 }
+
+function curQ(){var Z=DATA.questions,v=Z.items.map(function(q,i){return{q:q,i:i}}).filter(function(x){return !x.q.hidden});if(!v.length)return -1;var k=0,l=Z.launch;if(/^\d{4}-\d{2}-\d{2}$/.test(l)){var p=l.split("-"),s=new Date(+p[0],+p[1]-1,+p[2]),n=new Date(),w=Math.floor((new Date(n.getFullYear(),n.getMonth(),n.getDate())-s)/6048e5);if(w>0)k=w%v.length}return v[k].i}
+function qsView(){
+  var Z=DATA.questions,c=curQ(),o='<h1>سؤال الفترة</h1><div class="card" style="display:block"><label style="margin-top:0">تاريخ الإطلاق<small>السؤال بيتغير كل أسبوع من التاريخ ده. قبله بيظهر السؤال المثبّت.</small></label><input type="date" id="q_launch" value="'+h(Z.launch||"")+'"><div class="muted" style="margin-top:8px">'+(Z.launch?"الإطلاق "+h(Z.launch)+".":"لسه مفيش تاريخ إطلاق: الموقع بيعرض السؤال المثبّت.")+'</div><p><button class="btn sm" id="q_ls">حفظ التاريخ</button></p></div>';
+  o+='<div class="top"><h2>الأسئلة ('+Z.items.length+')</h2><button class="btn pri sm" data-qnew="1">+ سؤال جديد</button></div>';
+  Z.items.forEach(function(q,i){var pill=q.hidden?'<span class="pill d">مخفي</span>':(i==c?'<span class="pill">'+(Z.launch&&new Date()>=new Date(Z.launch)?"":"مثبّت · ")+'ظاهر دلوقتي</span>':'<span class="pill d">ظاهر في دوره</span>');
+    o+='<div class="card qc"'+(q.hidden?' style="opacity:.6"':'')+'><div class="n">'+(i+1)+'</div><div class="t"><b>'+h(q.text)+'</b>'+pill+'</div><div class="acts"><button class="btn sm" data-qedit="'+i+'">تعديل</button><button class="btn sm" data-qtog="'+i+'">'+(q.hidden?"إظهار":"إخفاء")+'</button><span><button class="btn sm" data-qup="'+i+'"'+(i==0?" disabled":"")+'>↑</button> <button class="btn sm" data-qdn="'+i+'"'+(i==Z.items.length-1?" disabled":"")+'>↓</button></span><button class="btn sm" data-qdel="'+i+'">مسح</button></div></div>'});
+  o+='<p class="muted">الأسئلة بتتغير تلقائي كل أسبوع بالترتيب. المخفي بيتخطى ومش بيظهر للناس، وتقدري ترجعيه بعدين.</p>';
+  return o
+}
+function qfView(){return '<h1>'+(edit.i==null?"سؤال جديد":"تعديل السؤال")+'</h1>'+M()+'<label>السؤال<textarea id="q_text">'+h(edit.text)+'</textarea></label><p><button class="btn pri" id="q_sv">حفظ</button> <button class="btn" id="q_cn">إلغاء</button></p>'}
 function opt(v,t,s){return '<option value="'+v+'"'+(s?" selected":"")+'>'+h(t)+'</option>'}
 function formView(){
   var e=edit,isNew=!e.old;
@@ -104,6 +115,16 @@ function bind(){
   app.querySelectorAll("[data-ldr]").forEach(function(b){b.onclick=function(){edit=Object.assign({},DR[b.getAttribute("data-ldr")],{old:null});view="form";msg=null;render()}});
   app.querySelectorAll("[data-ldel]").forEach(function(b){b.onclick=function(){if(!confirm("تمسحي المسودة دي من موبايلك؟"))return;var n=b.getAttribute("data-ldel");delete DR[n];drSave();aDel(+n).then(function(){msg=null;render()})}});
   app.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(){if(!confirm("تمسحي العنصر ده؟"))return;var i=+b.getAttribute("data-del");mutate(function(){DATA.space_items.splice(i,1)},"remove item")}});
+
+  app.querySelectorAll("[data-qnew]").forEach(function(b){b.onclick=function(){edit={i:null,text:""};view="qf";msg=null;render()}});
+  app.querySelectorAll("[data-qedit]").forEach(function(b){b.onclick=function(){var i=+b.getAttribute("data-qedit");edit={i:i,text:DATA.questions.items[i].text};view="qf";msg=null;render()}});
+  app.querySelectorAll("[data-qtog]").forEach(function(b){b.onclick=function(){var i=+b.getAttribute("data-qtog");mutate(function(){var q=DATA.questions.items[i];q.hidden=!q.hidden},"toggle question")}});
+  app.querySelectorAll("[data-qup]").forEach(function(b){b.onclick=function(){var i=+b.getAttribute("data-qup");mutate(function(){var a=DATA.questions.items;a.splice(i-1,0,a.splice(i,1)[0])},"move question")}});
+  app.querySelectorAll("[data-qdn]").forEach(function(b){b.onclick=function(){var i=+b.getAttribute("data-qdn");mutate(function(){var a=DATA.questions.items;a.splice(i+1,0,a.splice(i,1)[0])},"move question")}});
+  app.querySelectorAll("[data-qdel]").forEach(function(b){b.onclick=function(){if(!confirm("تمسحي السؤال ده نهائي؟ لو عايزة ترجعيه بعدين استخدمي إخفاء."))return;var i=+b.getAttribute("data-qdel");mutate(function(){DATA.questions.items.splice(i,1)},"remove question")}});
+  var ql=document.getElementById("q_ls");if(ql)ql.onclick=function(){var v=document.getElementById("q_launch").value;mutate(function(){DATA.questions.launch=v},"set launch date")};
+  var qs=document.getElementById("q_sv");if(qs)qs.onclick=function(){var t=document.getElementById("q_text").value.trim();if(!t)return;var i=edit.i;view="qs";mutate(function(){if(i==null)DATA.questions.items.push({text:t,hidden:false});else DATA.questions.items[i].text=t},"save question")};
+  var qc=document.getElementById("q_cn");if(qc)qc.onclick=function(){edit=null;view="qs";msg=null;render()};
   var sv=document.getElementById("sv");if(sv)sv.onclick=doSave;
   var cn=document.getElementById("cn");if(cn)cn.onclick=function(){edit=null;view="eps";msg=null;render()};
   var ia=document.getElementById("ia");if(ia)ia.onclick=function(){var t=document.getElementById("i_text").value.trim();if(!t)return;var k=document.getElementById("i_kind").value,ep=+document.getElementById("i_ep").value;mutate(function(){DATA.space_items.push({kind:k,text:t,episode:ep})},"add item")}

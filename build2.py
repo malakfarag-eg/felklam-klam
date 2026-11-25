@@ -68,6 +68,13 @@ def quote_list(items,pre,limit=None):
     for k,t,n in (items[:limit] if limit else items):
         out+=f'<li class="tq"><small>{k}</small><p>{e(t)}</p><a href="{pre}ep/{n}.html">من حلقة {e(BY[n]["title"])} ←</a></li>'
     return f'<ul class="tqs">{out}</ul>'
+def pq_h2():
+    Qs=D.get("questions",{})
+    vis=[q["text"] for q in Qs.get("items",[]) if not q.get("hidden")]
+    if not vis: return ""
+    from html import escape
+    return '<h2 id="pq" data-launch="%s" data-q="%s">%s</h2>'%(escape(Qs.get("launch","")),escape(json.dumps(vis,ensure_ascii=False)),escape(vis[0]))
+
 def askform(idp="askf"):
     return f'''<form id="{idp}" class="wf" novalidate><input type="hidden" name="access_key" value="{KEY}"><input type="hidden" name="subject" value="سؤال الفترة دي - ف الكلامِ كلام">
 <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
@@ -101,7 +108,7 @@ idx=head("ف الكلامِ كلام","",cls="home")+f'''
 <a class="all" href="space.html">كمّل ←</a></div></section>
 
 <section class="ask rv" id="ask"><div class="in"><small class="lab">سؤال الفترة دي</small>
-<h2>لو فتحنا دماغك دلوقتي، هنلاقي فيها إيه؟</h2>{askform()}</div></section>'''+foot("")
+{pq_h2()}{askform()}</div></section>'''+foot("")
 open("index.html","w",encoding="utf-8").write(idx)
 
 # ---------- EPISODES
