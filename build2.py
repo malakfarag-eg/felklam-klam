@@ -101,7 +101,7 @@ idx=head("ف الكلامِ كلام","",cls="home")+f'''
 <a class="all" href="space.html">كمّل ←</a></div></section>
 
 <section class="ask rv" id="ask"><div class="in"><small class="lab">سؤال الفترة دي</small>
-<h2>إيه فكرة مش قادر تبطل تفكر فيها الفترة دي؟</h2>{askform()}</div></section>'''+foot("")
+<h2>لو فتحنا دماغك دلوقتي، هنلاقي فيها إيه؟</h2>{askform()}</div></section>'''+foot("")
 open("index.html","w",encoding="utf-8").write(idx)
 
 # ---------- EPISODES
