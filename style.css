@@ -337,3 +337,10 @@ html[data-lang=en] .tq a{direction:ltr;text-align:right;display:block}
 .fl a:first-child{margin-inline-end:6px}
 html[data-lang=en] .fw{direction:ltr}
 html[data-lang=en] .soc,html[data-lang=en] .ctt{direction:ltr;text-align:left}
+/* EN preview: layout stays RTL, each text block aligns by its own language */
+html[data-lang=en] body :is(h1,h2,h3,h4,p,blockquote,li,label,figcaption,.hero a,.btn,.ask h2,.ask label,.sec h2):not(.lsw):not(.lsw *):not(.top *):not(.fw *):not(.tm):not(.tm *):not(.soc *):not(.tt):not(.cap){unicode-bidi:plaintext;text-align:start}
+html[data-lang=en] input::placeholder,html[data-lang=en] textarea::placeholder{font-size:14px}
+html[data-lang=en] .tt,html[data-lang=en] .lab,html[data-lang=en] .em,html[data-lang=en] .back{direction:ltr;text-align:left;display:block}
+html[data-lang=en] .lab{display:block}
+html[data-lang=en] .tq small,html[data-lang=en] .tp span,html[data-lang=en] .tp b{display:block;direction:ltr;text-align:left}
+html[data-lang=en] .tp{text-align:left}
