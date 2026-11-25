@@ -78,7 +78,7 @@ function fix(root,base){
 function swap(doc,url){
   fix(doc.body,url);
   ["header.top","main","footer"].forEach(function(sel){var n=doc.querySelector(sel),o=document.querySelector(sel);if(n&&o)o.innerHTML=n.innerHTML});
-  document.body.className=doc.body.className+(cur?" hasmini":""); document.title=doc.title; init();
+  document.body.className=doc.body.className+(cur?" hasmini":""); document.title=doc.title; if(window.__run)window.__run(); init();
 }
 function go(url,pop){
   fetch(url).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){

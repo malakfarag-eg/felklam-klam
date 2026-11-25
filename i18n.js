@@ -43,6 +43,7 @@ function tr(s){
   else if(m=t.match(/^([٠-٩]+) (\S+) ([٠-٩]+)( · .+)?$/)){if(M[m[2]])r=dig(m[1])+" "+M[m[2]]+" "+dig(m[3])+(m[4]?dig(m[4]):"")}
   return r==null?s:s.replace(t,r);
 }
+window.__run=function(){try{run()}catch(e){}};
 window.__T=function(s){return L=="en"?tr(s):s};
 function run(){
   if(L!="en")return;
