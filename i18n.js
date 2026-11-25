@@ -22,7 +22,7 @@ var D={
 "← الحلقات":"← Episodes","اقفل المشغل":"Close player",
 "أسئلة":"Questions","اقتباسات":"Quotes","خواطر":"Thoughts","فويس نوتس":"Voice notes","قريبًا.":"Soon.",
 "ابعتلنا":"Write to us","اسمك (اختياري)":"Your name (optional)",
-"اقتراح موضوع":"Topic suggestion","السوشيال":"Social","تعاون":"Collaboration","رسالة":"Message",
+"اقتراح موضوع":"Topic suggestion","التواصل":"Social Media","تعاون":"Collaboration","رسالة":"Message",
 "بحث":"Search","سرعة التشغيل":"Playback speed","مستوى الصوت":"Volume","موضع التشغيل":"Playback position",
 "رجوع ١٥ ثانية":"Back 15 seconds","تقديم ١٥ ثانية":"Forward 15 seconds","رسالتك":"Your message","إجابتك":"Your answer"
 };
