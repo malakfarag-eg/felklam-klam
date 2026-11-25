@@ -2,7 +2,7 @@
 var d=document,h=d.documentElement,L=h.getAttribute("data-lang")||"ar";
 var D={
 "الحلقات":"Episodes","اسأل نفسك":"Ask Yourself","عنّا":"About","تواصل":"Contact",
-"يوتيوب":"YouTube","إنستجرام":"Instagram","فيسبوك":"Facebook",
+"يوتيوب":"YouTube","إنستجرام":"Instagram","فيسبوك":"Facebook","جيميل":"Gmail",
 "اسمع آخر حلقة":"Listen to the latest episode","ادخل واتفرج براحتك":"Take your time and browse",
 "آخر حلقة":"Latest episode","الحلقة":"Episode","شغّل الحلقة":"Play episode","صفحة الحلقة":"Episode page",
 "آخر الحلقات":"Latest episodes","كل الحلقات":"All episodes","كل الحلقات ←":"All episodes →",
